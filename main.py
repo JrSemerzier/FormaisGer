@@ -87,11 +87,10 @@ if __name__== "__main__":
     #AUTOMATA TO GRAMMAR
     gram= GRAM(
     variables={'S', 'B'},
-    symbols={'a', 'b'},
+    symbols={'a', 'b','c'},
     productions={'S':{'aS','bB'},
                 'B':{'bB','c'}
     },
     initial_variable='S' 
     )
-
     aut=gram.Gram_to_auto()
