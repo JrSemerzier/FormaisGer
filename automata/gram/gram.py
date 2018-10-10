@@ -49,14 +49,18 @@ def Auto_to_gram(auto):
     productions={}
     for states in auto.transitions.keys():#states='q0','q1','q2'
         val=auto.transitions.get(states) #val={'a': {'q0','q1'},'b':{'q0'}
-        if  val.keys() is not None: 
-            um_set=set()
+        if  val.keys() is not None: #vl.keys=
+            um_set=set()# n auxilar set use as value in a dictonary
             for sym in val.keys():  # 'a' e 'b'        
                 val2=val.get(sym) # val2={'q0','q1'}
-                if val2 is not None:
+                if val2 is not set():
                     for elem2 in val2: #elem2='q0'
-                        conc=sym+elem2
-                        um_set.add(conc)
-                    print(um_set)
-        productions.update({states:um_set })                
+                        if elem2 in auto.final_states:
+                            um_set.add(sym)
+                        else:
+                            conc=sym+elem2
+                            um_set.add(conc)
+                    #print(type(val2))#check type of a variable
+        if len(um_set)!=0:# se o conjunto não está vazia
+            productions.update({states:um_set })                
     return productions
