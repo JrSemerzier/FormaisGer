@@ -62,5 +62,9 @@ def Auto_to_gram(auto):
                             um_set.add(conc)
                     #print(type(val2))#check type of a variable
         if len(um_set)!=0:# se o conjunto não está vazia
-            productions.update({states:um_set })                
+            productions.update({states:um_set }) 
+    if auto.initial_state in auto.final_states:
+        valueSymInical=productions.get(auto.initial_state)
+        valueSymInical.add('ε')
+
     return productions

@@ -105,7 +105,7 @@ if __name__== "__main__":
         'q2': {}
     },
     initial_state='q0',
-    final_states={'q2'}
+    final_states={'q2','q0'}
     )
 
     gram=Auto_to_gram(nfa)
