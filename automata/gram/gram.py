@@ -11,24 +11,52 @@ class GRAM:# O DFA deriva(acrescenta) a class FA do arquivo fa.py
     	self.productions=copy.deepcopy(productions)
     	self.initial_variable=initial_variable
 
-    def Gram_to_auto(self):
-        transicoes={}#dicionario vazia
-        for elem in self.productions.items():#cada item in the dicionario elem=('s',{'aS','bB'})
-            val={}#dicionario vazia val={'a':'s','b':'B'}
-            for elem1 in elem[1]:#elem1= 'bB/ c/ bB/ aS'
-                # for sym in self.symbols:                   
-                if len(elem1)>1: #for cada values in the dicionario
-                    val[elem1[0]]= elem1[1]                     
-                if len(elem1)==1:
-                    val[elem1[0]]='φ'
-            transicoes[elem[0]]=val
-        #print(transicoes)  
-        final_state={'φ'}  
-        nfa = NFA(
-        self.variables,
-        self.symbols,
-        transicoes,#{'S': {'a': 'S', 'b': 'B'}, 'B': {'c': 'φ', 'b': 'B'}}
-        self.initial_variable,
-        final_state
-        )
-        #return nfa
+def Gram_to_auto(gram):
+    transicoes={}#dicionario vazia
+    for elem in gram.productions.items():#cada item in the dicionario elem=('s',{'aS','bB'})
+        val={}#dicionario vazia val={'a':'s','b':'B'}
+        for elem1 in elem[1]:#elem1= 'bB/ c/ bB/ aS'
+            # for sym in self.symbols:                   
+            if len(elem1)>1: #for cada values in the dicionario
+                val[elem1[0]]= elem1[1]                     
+            if len(elem1)==1:
+                val[elem1[0]]='φ'
+        transicoes[elem[0]]=val
+    final_state={'φ'}
+    variables=set()
+    variables=gram.variables
+    variables.add('φ')
+   # var=self.variables
+    print(transicoes) 
+    print(final_state) 
+    print(variables) 
+    print(gram.symbols)
+    print(gram.initial_variable)
+   
+    # nfa = NFA(
+    # variables,
+    # gram.symbols,
+    # transicoes,#{'S': {'a': 'S', 'b': 'B'}, 'B': {'c': 'φ', 'b': 'B'}}
+    # gram.initial_variable,
+    # final_state
+    # )
+    # return nfa
+
+def Auto_to_gram(auto):
+    intial_symbol=auto.initial_state
+    variables=auto.states
+    symbols= auto.input_symbols
+    productions={}
+    for states in auto.transitions.keys():#states='q0','q1','q2'
+        val=auto.transitions.get(states) #val={'a': {'q0','q1'},'b':{'q0'}
+        if  val.keys() is not None: 
+            um_set=set()
+            for sym in val.keys():  # 'a' e 'b'        
+                val2=val.get(sym) # val2={'q0','q1'}
+                if val2 is not None:
+                    for elem2 in val2: #elem2='q0'
+                        conc=sym+elem2
+                        um_set.add(conc)
+                    print(um_set)
+        productions.update({states:um_set })                
+    return productions

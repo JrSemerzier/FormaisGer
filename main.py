@@ -1,6 +1,6 @@
 from automata.fa.dfa import DFA
 from automata.fa.nfa import NFA
-from automata.gram.gram import GRAM
+from automata.gram.gram import *
 
 if __name__== "__main__":
 	# DFA which matches all binary strings ending in an odd number of '1's
@@ -84,13 +84,30 @@ if __name__== "__main__":
     # print(dfa.final_states)
         
 	# ==============================================================================================
-    #AUTOMATA TO GRAMMAR
-    gram= GRAM(
-    variables={'S', 'B'},
-    symbols={'a', 'b','c'},
-    productions={'S':{'aS','bB'},
-                'B':{'bB','c'}
+    #GRAMMAR TO AUTOMATA TO GRAMMAR
+    # gram= GRAM(
+    # variables={'S', 'B'},
+    # symbols={'a', 'b','c'},
+    # productions={'S':{'aS','bB'},
+    #             'B':{'bB','c'}
+    # },
+    # initial_variable='S' 
+    # )
+    # aut=Gram_to_auto(gram)
+#AUTOMATO TO GRAMMAR
+    nfa = NFA(
+    states={'q0', 'q1', 'q2'},
+    input_symbols={'a', 'b'},
+    transitions={
+        'q0': {'a': {'q0','q1'},'b':{'q0'}},
+        # Use 'ε' as the key name for empty string (lambda/epsilon) transitions
+        'q1': {'b': {'q2'}},
+        'q2': {}
     },
-    initial_variable='S' 
+    initial_state='q0',
+    final_states={'q2'}
     )
-    aut=gram.Gram_to_auto()
+
+    gram=Auto_to_gram(nfa)
+
+    print(gram)
