@@ -13,34 +13,30 @@ class GRAM:# O DFA deriva(acrescenta) a class FA do arquivo fa.py
 
 def Gram_to_auto(gram):
     transicoes={}#dicionario vazia
-    for elem in gram.productions.items():#cada item in the dicionario elem=('s',{'aS','bB'})
-        val={}#dicionario vazia val={'a':'s','b':'B'}
-        for elem1 in elem[1]:#elem1= 'bB/ c/ bB/ aS'
-            # for sym in self.symbols:                   
-            if len(elem1)>1: #for cada values in the dicionario
-                val[elem1[0]]= elem1[1]                     
-            if len(elem1)==1:
-                val[elem1[0]]='φ'
-        transicoes[elem[0]]=val
-    final_state={'φ'}
-    variables=set()
+    for elem in gram.productions.keys():#cada item in the dicionario elem='s'/'B'
+        valu=gram.productions.get(elem) #valu={'aS','bB'}
+        aux={}
+        parteDireita={}
+        for sym in gram.symbols:#sym='a'/'b'/'c'}
+            val=set()#the table can have um set for each symbolo
+            for elem1 in valu:#elem1='aS'
+                if len(elem1)>1: #for cada values in the dicionario
+                    if sym==elem1[0]:
+                        val.add(elem1[1])             
+                if len(elem1)==1:
+                    if sym==elem1[0]:
+                        val.add('φ')
+            if  len(val)!=0:#para não colocar {}(conjunto vazia quando a tabela tem -)
+                parteDireita.update({sym:val})
+
+        transicoes.update({elem :parteDireita}) 
+
+    final_state={'φ'}# estado adicional que um estado final
+    variables=set() #recriando uma outra Conjunto de variavel para adicionar o novo variavel
     variables=gram.variables
     variables.add('φ')
-   # var=self.variables
-    print(transicoes) 
-    print(final_state) 
-    print(variables) 
-    print(gram.symbols)
-    print(gram.initial_variable)
-   
-    # nfa = NFA(
-    # variables,
-    # gram.symbols,
-    # transicoes,#{'S': {'a': 'S', 'b': 'B'}, 'B': {'c': 'φ', 'b': 'B'}}
-    # gram.initial_variable,
-    # final_state
-    # )
-    # return nfa
+    return transicoes                 
+    
 
 def Auto_to_gram(auto):
     intial_symbol=auto.initial_state

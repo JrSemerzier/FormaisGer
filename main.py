@@ -84,30 +84,34 @@ if __name__== "__main__":
     # print(dfa.final_states)
         
 	# ==============================================================================================
+# #AUTOMATO TO GRAMMAR
+#     nfa = NFA(
+#     states={'q0', 'q1', 'q2'},
+#     input_symbols={'a', 'b'},
+#     transitions={
+#         'q0': {'a': {'q0','q1'},'b':{'q0'}},
+#         # Use 'ε' as the key name for empty string (lambda/epsilon) transitions
+#         'q1': {'b': {'q2'}},
+#         'q2': {}
+#     },
+#     initial_state='q0',
+#     final_states={'q2','q0'}
+#     )
+
+#     gram=Auto_to_gram(nfa)
+
+#     print(gram)
+#-------------------------------------------------------------------------------------------------
+
     #GRAMMAR TO AUTOMATA TO GRAMMAR
-    # gram= GRAM(
-    # variables={'S', 'B'},
-    # symbols={'a', 'b','c'},
-    # productions={'S':{'aS','bB'},
-    #             'B':{'bB','c'}
-    # },
-    # initial_variable='S' 
-    # )
-    # aut=Gram_to_auto(gram)
-#AUTOMATO TO GRAMMAR
-    nfa = NFA(
-    states={'q0', 'q1', 'q2'},
-    input_symbols={'a', 'b'},
-    transitions={
-        'q0': {'a': {'q0','q1'},'b':{'q0'}},
-        # Use 'ε' as the key name for empty string (lambda/epsilon) transitions
-        'q1': {'b': {'q2'}},
-        'q2': {}
+    gram= GRAM(
+    variables={'S', 'B'},
+    symbols={'a', 'b','c'},
+    productions={'S':{'aS','bB'},
+                'B':{'bB','c'}
     },
-    initial_state='q0',
-    final_states={'q2','q0'}
+    initial_variable='S' 
     )
+    aut=Gram_to_auto(gram)
+    print(aut)
 
-    gram=Auto_to_gram(nfa)
-
-    print(gram)
